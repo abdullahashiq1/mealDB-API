@@ -17,7 +17,7 @@ const displayMeals = (foods) =>{
     }
 
     foods.forEach(food =>{
-        // console.log(food);
+        console.log(food);
         const div = document.createElement('div');
         const sliceChr = food.strInstructions.length > 200 ? `${food.strInstructions.substring(0, 200)}...`: food.strInstructions; 
     
@@ -32,8 +32,9 @@ const displayMeals = (foods) =>{
                         <div class="card-body">
                             <h5 class="card-title">${food.strMeal}</h5>
                             <p class="card-text">${sliceChr}</p>
+                            <p class="card-text">${food.idMeal}</p>
                         </div>
-                        <button type="button" class="text-warning fw-bold mt-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button onclick="loadIndividual(${food.idMeal})" type="button" class="text-warning fw-bold mt-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             View Details
                         </button>
                         
@@ -50,6 +51,33 @@ const displayMeals = (foods) =>{
 const searchMeals = ()=>{
     const inputId = document.getElementById('input-field').value;
     loadmealDb(inputId)
+}
+
+const loadIndividual = async(mealId) =>{
+    try{
+        const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+        const res = await fetch(url);
+        const data = await res.json()
+        displayIndividual(data.meals[0])
+    }
+    catch(error){
+        console.log(error)
+    }
+
+}
+
+const displayIndividual = meal =>{
+    console.log(meal)
+    document.getElementById('exampleModalLabel').innerText = meal.strMeal;
+    const modalBody = document.getElementById('mealDetails');
+    modalBody.innerHTML = `
+        <img src="${meal.strMealThumb}" class="img-fluid">
+        <p>Ingredients: ${meal.strIngredient1}, ${meal.strIngredient2} ${meal.strIngredient3}, ${meal.strIngredient4}, ${meal.strIngredient5}</p>
+        <h5>${meal.strArea}</h5>
+        <h5>${meal.strCategory}</h5>
+        <a href="${meal.strYoutube}" target="_blank">See Details in Video</a>
+
+    `
 }
 
 const showlAll = () =>{
