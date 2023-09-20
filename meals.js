@@ -9,12 +9,30 @@ const displayMeals = (foods) =>{
     const container = document.getElementById('food-container');
     container.innerText = '';
 
+    /*
     // show all after 6 cards 
     if(foods.length > 6) {
-        console.log('Show ALl')
+        console.log(foods.length)
     }else{
         console.log('six lenght')
     }
+
+    let numToShow = Math.min(foods.length, 6);
+
+    for(let i = 0; i < numToShow; i++){
+        const food = foods[i];
+        const div = createCard(food);
+        container.appendChild(div);
+    }
+
+    if(foods.length > 6){
+        const showAllButton = document.createElement('button');
+        showAllButton.innerText = 'Show All';
+        showAllButton.classList.add('showAll');
+        showAllButton.addEventListener('click', showAll);
+        container.appendChild(showAllButton);
+    }
+*/
 
     foods.forEach(food =>{
         console.log(food);
@@ -32,7 +50,6 @@ const displayMeals = (foods) =>{
                         <div class="card-body">
                             <h5 class="card-title">${food.strMeal}</h5>
                             <p class="card-text">${sliceChr}</p>
-                            <p class="card-text">${food.idMeal}</p>
                         </div>
                         <button onclick="loadIndividual(${food.idMeal})" type="button" class="text-warning fw-bold mt-3 mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             View Details
@@ -79,9 +96,19 @@ const displayIndividual = meal =>{
 
     `
 }
-
-const showlAll = () =>{
-    
+/*
+const createCard = (food) =>{
+    const div = document.createElement('div');
+    div.innerText = food.strMeal;
+    return div;
 }
 
+const showAll= () =>{
+    console.log('Added function')
+    const container = document.getElementById('food-container');
+    container.innerHTML = '';
+    loadmealDb('fish');
+    
+} 
+*/
 loadmealDb('fish')
